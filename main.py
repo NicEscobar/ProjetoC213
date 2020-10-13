@@ -19,6 +19,7 @@ degrau = mydata['degrau0_2']
 resp = mydata['resp0_2']
 tempo = mydata['tempo0_2']
 
+tempo = tempo.T
 C = len(degrau[0])
 L = len(degrau) 
 
@@ -37,50 +38,50 @@ Theta = F.T @ F
 Theta = np.linalg.inv(Theta)
 Theta = Theta @ F.T @ J
 
-#print(Theta)
+print(Theta)
 
 a1 = Theta[0]
 b1 = Theta[1]
 
 sysZ = TransferFunction(b1,(1-a1),0.2)
 
-#print(sysZ)
+#print(a1)
+#print(b1)
 
-#plt.plot(tempo,espmq)
+#plt.plot(sysZ,tempo)
 #plt.show
 
 # ----------------------------------PID-------------------------------------
-#a1 = 0.99557
-#b1 =  0.0037426
+a1 = 0.99557
+b1 =  0.0037426
 
-#Kp = 4     #Ganho proporcional
-#Ki = 0.1   #Ganho integral
-#Kd = 1     #Ganho derivativo
+Kp = 4     #Ganho proporcional
+Ki = 0.1   #Ganho integral
+Kd = 1     #Ganho derivativo
 
-#Ts = 0.1   #Tempo 
+Ts = 0.2   #Tempo 
 
-#SP = 50    #Setpoint
-#PV = 0     #Precess Value
+SP = 50    #Setpoint
+PV = 0     #Precess Value
 
-#resposta = 0 
-#AcaoIntegral = 0
+resposta = [] 
+AcaoIntegral = 0
 
-#ErroAnterior = SP - PV
+ErroAnterior = SP - PV
+tempo = np.arange(0,0.1,10)
 
-#for i in np.arange(0.1, 200, 0.1): #o i vai de 0.1 até 100 passo 0.1
+for i in np.arange(0,0.1,10): #o i vai de 0.1 até 100 passo 0.1
 
-# Erro = SP - PV
+    Erro = SP - PV
 
-#  AcaoProporcional = Kp*Erro
-#  AcaoIntegral = AcaoIntegral + Ki*Ts*Erro
-#  AcaoDerivativa = ((Erro - ErroAnterior)/Ts)*Kd
+    AcaoProporcional = Kp*Erro
+    AcaoIntegral = AcaoIntegral + Ki*Ts*Erro
+    AcaoDerivativa = ((Erro - ErroAnterior)/Ts)*Kd
 
-#  AcaoControlador = AcaoProporcional + AcaoIntegral + AcaoDerivativa
+    AcaoControlador = AcaoProporcional + AcaoIntegral + AcaoDerivativa
 
-#  PV = a1*PV + b1*AcaoControlador
-#  resposta = [resposta, PV]
-    
-  #print(resposta)
-  #plt.plot(i, PV)
+    PV = (a1*PV) + (b1*AcaoControlador)
+    resposta.append(PV)
+    #plt.plot(i,resposta)
 
 #plt.show()

@@ -1,0 +1,100 @@
+#Kp = 4, Ki = 0,1 e Kd = 1
+Kp = 4;
+Ki = 0.1;
+Kd = 1;
+Ts = 0.1;
+SP = 50;
+PV = 0;
+resp_6 = 0;
+AcaoIntegral = 0;
+ErroAnterior = SP - PV;
+for i = 0.1:0.1:225.6
+  Erro = SP - PV;
+  AcaoProporcional = Kp*Erro;
+  AcaoIntegral = AcaoIntegral + Ki*Ts*Erro;
+  AcaoDerivativa = ((Erro - ErroAnterior)/Ts)*Kd;
+  AcaoControlador = AcaoProporcional + AcaoIntegral + AcaoDerivativa;
+  PV = 0.99736*PV + 0.0019800*AcaoControlador;
+  resp_6 = [resp_6 PV];
+end
+
+#a)Kp = 4, Ki = 0,1 e Kd = 10
+Kp = 4;
+Ki = 0.1;
+Kd = 10;
+Ts = 0.1;
+SP = 50;
+PV = 0;
+resp_6_a = 0;
+AcaoIntegral = 0;
+for i = 0.1:0.1:225.6
+  Erro = SP - PV;
+  AcaoProporcional = Kp*Erro;
+  AcaoIntegral = AcaoIntegral + Ki*Ts*Erro;
+  AcaoDerivativa = ((Erro - ErroAnterior)/Ts)*Kd;
+  AcaoControlador = AcaoProporcional + AcaoIntegral + AcaoDerivativa;
+  PV = 0.99736*PV + 0.0019800*AcaoControlador;
+  resp_6_a = [resp_6_a PV];
+end
+
+#b)Kp = 4, Ki = 0,1 e Kd = 16
+Kp = 4;
+Ki = 0.1;
+Kd = 16;
+Ts = 0.1;
+SP = 50;
+PV = 0;
+resp_6_b = 0;
+AcaoIntegral = 0;
+for i = 0.1:0.1:225.6
+  Erro = SP - PV;
+  AcaoProporcional = Kp*Erro;
+  AcaoIntegral = AcaoIntegral + Ki*Ts*Erro;
+  AcaoDerivativa = ((Erro - ErroAnterior)/Ts)*Kd;
+  AcaoControlador = AcaoProporcional + AcaoIntegral + AcaoDerivativa;
+  PV = 0.99736*PV + 0.0019800*AcaoControlador;
+  resp_6_b = [resp_6_b PV];
+end
+
+#c)Kp = 4, Ki = 0,1 e Kd = 25
+Kp = 4;
+Ki = 0.1;
+Kd = 25;
+Ts = 0.1;
+SP = 50;
+PV = 0;
+resp_6_c = 0;
+AcaoIntegral = 0;
+for i = 0.1:0.1:225.6
+  Erro = SP - PV;
+  AcaoProporcional = Kp*Erro;
+  AcaoIntegral = AcaoIntegral + Ki*Ts*Erro;
+  AcaoDerivativa = ((Erro - ErroAnterior)/Ts)*Kd;
+  AcaoControlador = AcaoProporcional + AcaoIntegral + AcaoDerivativa;
+  PV = 0.99736*PV + 0.0019800*AcaoControlador;
+  resp_6_c = [resp_6_c PV];
+end
+
+tempo = 0:0.1:225.6;
+
+#NORMAL - Não apresenta overshoot
+#Tempo de acomodação em torno de 57 segundos
+plot(tempo,resp_6,'r')
+hold on
+
+#A) Resposta menos agressiva, apresenta overshoot em torno de 0.8%,
+#demora menos para entrar em regime permanente
+#Tempo de acomodação em torno de 49.6 segundos
+plot(tempo,resp_6_a,'g')
+hold on
+
+#B) Resposta menos agressiva, apresenta overshoot em torno de 1.7%,
+#demora mais para entrar em regime permanente
+#Tempo de acomodação em torno de 48.3 segundos
+plot(tempo,resp_6_b,'b')
+hold on
+
+#C) Resposta menos agressiva, apresenta overshoot em torno de 3%,
+#demora mais para entrar em regime permanente
+#Tempo de acomodação em torno de 115 segundos
+plot(tempo,resp_6_c,'y')
