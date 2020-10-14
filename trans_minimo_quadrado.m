@@ -13,8 +13,8 @@ Theta = inv(F'*F)*F'*J;
 a1 = Theta(1)
 b1 = Theta(2)
 
-sysZ = tf(b1,[1 -a1],0.2) %Tempo de amostragem de 0.1 segundos
+sysZ = tf(b1,[1 -a1],0.2); %Tempo de amostragem de 0.1 segundos
 sysS = d2c(sysZ)
 
-plot(tempo0_2, respmq)
+#plot(tempo0_2, respmq)
 

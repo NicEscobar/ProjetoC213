@@ -19,36 +19,43 @@ degrau = mydata['degrau0_2']
 resp = mydata['resp0_2']
 tempo = mydata['tempo0_2']
 
-tempo = tempo.T
-C = len(degrau[0])
-L = len(degrau) 
+#--------------------------------Mínimos Quadrados ----------------------------------
+
+C = len(degrau[0]) #numero de colunas 
+L = len(degrau)    #numero de linhas
 
 F = np.array([resp[0,0:C-1], degrau[0,0:C-1]],)
-F = F.T
+F = F.T #Matriz transposta
+#print(F)
 
-J = np.array([resp[0,0:C-1],])
+J = np.array([resp[0,1:C],])
 J = J.T
+#print(J)
 
-#C = len(J[0])
-#L = len(J) 
+tempo = np.array([tempo[0,0:C-1],])
+#tempo = tempo.T
+
+C = len(tempo[0])
+L = len(tempo) 
 #print("coluna ", C)
 #print("linha ",L)
 
-Theta = F.T @ F
-Theta = np.linalg.inv(Theta)
-Theta = Theta @ F.T @ J
+#
+Theta = np.linalg.inv(F.T @ F) @ F.T @ J
+#print(Theta)
 
-print(Theta)
-
+#coeficientes
 a1 = Theta[0]
 b1 = Theta[1]
-
-sysZ = TransferFunction(b1,(1-a1),0.2)
-
 #print(a1)
-#print(b1)
+#print(b1
 
-#plt.plot(sysZ,tempo)
+
+#funcao de transferencia Z
+sysZ = TransferFunction(b1,(1-a1),0.2)
+#print(sysZ)
+
+#plt.plot(tempo, sysZ)
 #plt.show
 
 # ----------------------------------PID-------------------------------------
@@ -59,7 +66,7 @@ Kp = 4     #Ganho proporcional
 Ki = 0.1   #Ganho integral
 Kd = 1     #Ganho derivativo
 
-Ts = 0.2   #Tempo 
+Ts = 0.1   #Tempo 
 
 SP = 50    #Setpoint
 PV = 0     #Precess Value
@@ -68,9 +75,9 @@ resposta = []
 AcaoIntegral = 0
 
 ErroAnterior = SP - PV
-tempo = np.arange(0,0.1,10)
+#tempo = np.arange(0,0.1,100)
 
-for i in np.arange(0,0.1,10): #o i vai de 0.1 até 100 passo 0.1
+for i in np.arange(0,0.1,100): #o i vai de 0.1 até 100 passo 0.1
 
     Erro = SP - PV
 
@@ -82,6 +89,6 @@ for i in np.arange(0,0.1,10): #o i vai de 0.1 até 100 passo 0.1
 
     PV = (a1*PV) + (b1*AcaoControlador)
     resposta.append(PV)
-    #plt.plot(i,resposta)
+    #plt.plot(tempo[i],resposta)
 
 #plt.show()
