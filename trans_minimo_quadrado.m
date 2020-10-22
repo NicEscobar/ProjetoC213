@@ -16,5 +16,7 @@ b1 = Theta(2)
 sysZ = tf(b1,[1 -a1],0.2); %Tempo de amostragem de 0.1 segundos
 sysS = d2c(sysZ)
 
-#plot(tempo0_2, respmq)
+resp_ident = 50*step(sysZ,tempo0_2);
 
+#plot(tempo0_2, resp_ident)
+#plotshow();
