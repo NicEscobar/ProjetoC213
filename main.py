@@ -19,7 +19,18 @@ degrau = mydata['degrau0_2']
 resp = mydata['resp0_2']
 tempo = mydata['tempo0_2']
 
+# -------------------------------Chama o grafico--------------------------
+
+
+def grafico(tempo, y):
+    plt.plot(tempo, y)
+    plt.grid()
+    plt.xlabel("tempo")
+    plt.ylabel("y")
+    plt.show()
+
 # --------------------------------Mínimos Quadrados ----------------------------------
+
 
 C = len(degrau[0])  # numero de colunas
 L = len(degrau)  # numero de linhas
@@ -51,19 +62,13 @@ b1 = Theta[1]
 # print(a1)
 # print(b1
 
+
 # funcao de transferencia Z
-sysZ = tf(b1, (1-a1), 0.2)
+#sysZ = tf([int(b1)], [(1-int(a1)), 0.2])
 # print(sysZ)
 
 #t, y = step_response(sysS)
 # print(y)
-
-#plt.step(t, y)
-# plt.grid()
-# plt.xlabel("tempo")
-# plt.ylabel("y")
-# plt.show
-
 
 # ----------------------------------PID-------------------------------------
 
@@ -80,9 +85,9 @@ resposta = []
 AcaoIntegral = 0
 
 ErroAnterior = SP - PV
-tempo2 = np.arange(0, 6, 0.1)
+tempo2 = np.arange(0, 30, 0.1)
 
-for i in np.arange(0, 6, 0.1):  # o i vai de 0.1 até 100 passo 0.1
+for i in np.arange(0, 30, 0.1):  # o i vai de 0.1 até 100 passo 0.1
 
     Erro = SP - PV
 
@@ -94,11 +99,7 @@ for i in np.arange(0, 6, 0.1):  # o i vai de 0.1 até 100 passo 0.1
 
     AcaoControlador = AcaoProporcional + AcaoIntegral + AcaoDerivativa
 
-    PV = (0.99736*PV) + (0.0019800*AcaoControlador)
+    PV = (a1*PV) + (b1*AcaoControlador)
     resposta.append(PV)
 
-plt.plot(tempo2, resposta)
-plt.grid()
-plt.xlabel("tempo")
-plt.ylabel("y")
-plt.show()
+grafico(tempo2, resposta)

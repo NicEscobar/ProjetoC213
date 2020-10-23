@@ -13,10 +13,17 @@ Theta = inv(F'*F)*F'*J;
 a1 = Theta(1)
 b1 = Theta(2)
 
-sysZ = tf(b1,[1 -a1],0.2); %Tempo de amostragem de 0.1 segundos
-sysS = d2c(sysZ)
+%Tempo de amostragem de 0.2 segundos
+sysZ = tf(b1,[1 -a1],0.2); 
+sysS = d2c(sysZ);
 
-resp_ident = 50*step(sysZ,tempo0_2);
 
-#plot(tempo0_2, resp_ident)
-#plotshow();
+plot(tempo0_2, sysZ);
+
+resp_identificada = 50*step(sysZ,tempo0_2);
+
+%plot(tempo0_2, resp_identificada);
+xlabel("Tempo [s]");
+ylabel("Y");
+
+%plotshow();
