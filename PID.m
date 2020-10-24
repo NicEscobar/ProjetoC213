@@ -1,7 +1,10 @@
-#Kp = 4, Ki = 0,1 e Kd = 1
+a1 = 0.9956;
+b1 = 0.003743;
+
 Kp = 5;
 Ki = 8;
 Kd = 10.25;
+
 Ts = 0.1;
 
 SP = 1;
@@ -24,10 +27,10 @@ for i = 0.1:0.1:6
   
   AcaoControlador = AcaoProporcional + AcaoIntegral + AcaoDerivativa;
   
-  PV = 0.99736*PV + 0.0019800*AcaoControlador;
+  PV = a1*PV + b1*AcaoControlador;
   resp_6 = [resp_6 PV];
  
 end
 
-plot (tempo,resp_6)
+plot(tempo,resp_6)
 plot.show()

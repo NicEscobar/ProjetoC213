@@ -29,6 +29,7 @@ def grafico(tempo, y):
     plt.ylabel("y")
     plt.show()
 
+
 # --------------------------------Mínimos Quadrados ----------------------------------
 
 
@@ -72,7 +73,7 @@ b1 = Theta[1]
 
 # ----------------------------------PID-------------------------------------
 
-Kp = 5  # Ganho proporcional
+Kp = 3  # Ganho proporcional
 Ki = 8  # Ganho integral
 Kd = 10.25  # Ganho derivativo
 
