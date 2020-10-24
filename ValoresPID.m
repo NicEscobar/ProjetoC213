@@ -17,9 +17,9 @@ wcg = wn;
 MF = 2*asind(csi);
 
 %k(ganho) da função da  malha aberta
-k = 80;
+k = 50.01875;
 %tal da função em malha aberta
-tal = 16;
+tal = 1;
 
 G=(k/((tal*wcg*i)+1));
 modG = abs(G);
@@ -29,7 +29,8 @@ modC = 1/modG;
 %fase do controlador
 faseC = -180+MF-faseG;
 
-kd = 2
+kd = 1
+
 dividendoKP = ((modC^2)-((kd*wcg)^2));
 divisorKP = (1+(((tand(faseC))*(-1))^2));
 kp = sqrt(dividendoKP/divisorKP)

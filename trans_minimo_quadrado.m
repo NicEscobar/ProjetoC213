@@ -30,7 +30,7 @@ clear Theta
 sysZ = tf(b1,[1 -a1],0.2)
 %Função de transferência, domínio S
 sysS = d2c(sysZ)
-
+ 
 %resposta ao  degrau unitário de alplitude 50
 resp_identificada = 50*step(sysS,tempo0_2);
 

@@ -1,22 +1,22 @@
 a1 = 0.9956;
 b1 = 0.003743;
 
-Kp = 5;
-Ki = 8;
-Kd = 10.25;
+Kp = 13;
+Ki = 0.5;
+Kd = 1;
 
-Ts = 0.1;
+Ts = 0.2;
 
-SP = 1;
-PV = 0;
+SP = 50; %Sinal de entrada
+PV = 0;  %Sinal de saída
 
 resp_6 = 0;
 AcaoIntegral = 0;
 ErroAnterior = SP - PV;
 
-tempo = 0:0.1:6;
+tempo = 0:0.2:350;
 
-for i = 0.1:0.1:6
+for i = 0.1:0.2:350
   Erro = SP - PV;
   
   AcaoProporcional = Kp*Erro;
@@ -33,4 +33,3 @@ for i = 0.1:0.1:6
 end
 
 plot(tempo,resp_6)
-plot.show()
