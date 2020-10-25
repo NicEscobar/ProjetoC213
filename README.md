@@ -19,9 +19,11 @@ Numpy, Scipy, Matplotlib e Control:
 ### Matlab
 
 Instalar o pacote Control
+
 `>> pkg install -forge control`
 
 Carregar o pacote Control
+
 `>> pkg load control`
 
 ## Controle Digital
@@ -54,7 +56,7 @@ Para reduzir/eliminar a inserção/aumento do erro em regime permanente, pode-se
 O controlador possui três ganhos:
 - 𝐾𝑝 – Ganho proporcional
 - 𝐾𝑖 – Ganho integral
--  𝐾𝑑 – Ganho derivativo
+- 𝐾𝑑 – Ganho derivativo
 Cada tipo de ganho gera um comportamento diferente no sistema.
 
 
