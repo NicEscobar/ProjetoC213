@@ -19,14 +19,25 @@ degrau = mydata['degrau0_2']
 resp = mydata['resp0_2']
 tempo = mydata['tempo0_2']
 
-# -------------------------------Chama o grafico--------------------------
+# -------------------------------Graficos--------------------------
 
 
-def grafico(tempo, y):
+def grafico(tempo, y):  # Plota um gráfico
     plt.plot(tempo, y)
     plt.grid()
     plt.xlabel("tempo")
     plt.ylabel("y")
+    plt.show()
+
+
+def graficos(tempo, y1, y2, y3):  # Plota mais de um gráfico
+    plt.plot(tempo, y1, color='green')
+    plt.plot(tempo, y2, color='red')
+    plt.plot(tempo, y3, color='blue')
+    plt.grid()
+    plt.xlabel("tempo")
+    plt.ylabel("y")
+    plt.title("Sistema")
     plt.show()
 
 # ----------------------------------Malha Aberta-------------------------------------
@@ -37,7 +48,8 @@ def malha_aberta(tempo, a1, b1, PV, SP):
     for i in np.arange(0, 350, 0.2):
         PV = a1*PV + b1*SP
         resposta.append(PV)
-    grafico(tempo, resposta)
+    return resposta
+    #grafico(tempo, resposta)
 
 # ----------------------------------Malha Fechada com Controlador PID-------------------------------------
 
@@ -46,9 +58,10 @@ def malha_fechada_sem_ganho(tempo, a1, b1, PV, SP):
     resposta = []
     for i in np.arange(0, 350, 0.2):
         erro = SP - PV
-        PV = a1*PV + b1*SP
+        PV = a1*PV + b1*erro
         resposta.append(PV)
-    grafico(tempo, resposta)
+    return resposta
+    #grafico(tempo, resposta)
 
 # ----------------------------------Malha Fechada com Controlador PID-------------------------------------
 
@@ -72,8 +85,8 @@ def malha_fechada_controlador_PID(tempo, a1, b1, PV, SP, kp, ki, kd, Ts):
 
         PV = (a1*PV) + (b1*acao_controlador)
         resposta.append(PV)
-
-    grafico(tempo, resposta)
+    return resposta
+    #grafico(tempo, resposta)
 
 # --------------------------------Mínimos Quadrados ----------------------------------
 
@@ -125,6 +138,11 @@ PV = 0  # Precess Value
 
 tempo2 = np.arange(0, 350, 0.2)
 
-#malha_aberta(tempo2, a1, b1, PV, SP)
-#malha_fechada_sem_ganho(tempo2, a1, b1, PV, SP)
-malha_fechada_controlador_PID(tempo2, a1, b1, PV, SP, Kp, Ki, Kd, Ts)
+resposta_ma = malha_aberta(tempo2, a1, b1, PV, SP)
+resposta_mf = malha_fechada_sem_ganho(tempo2, a1, b1, PV, SP)
+resposta_mfc = malha_fechada_controlador_PID(
+    tempo2, a1, b1, PV, SP, Kp, Ki, Kd, Ts)
+
+# Chamando os gráficos
+graficos(tempo2, resposta_ma, resposta_mf, resposta_mfc)
+#grafico(tempo2, resposta_mf)
