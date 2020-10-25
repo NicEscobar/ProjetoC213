@@ -1,7 +1,6 @@
 
 import numpy as np
 import matplotlib.pyplot as plt
-import numpy.matlib as M
 from scipy import io, signal
 from control import *
 
@@ -35,9 +34,9 @@ def graficos(tempo, y1, y2, y3):  # Plota mais de um gráfico
     plt.plot(tempo, y2, color='red')
     plt.plot(tempo, y3, color='blue')
     plt.grid()
-    plt.xlabel("tempo")
-    plt.ylabel("y")
-    plt.title("Sistema")
+    plt.xlabel("Tempo [s]")
+    plt.ylabel("Y[m]")
+    plt.title("Sistema Dinâmico")
     plt.show()
 
 # ----------------------------------Malha Aberta-------------------------------------
