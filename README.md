@@ -6,30 +6,37 @@ Para cada equipe, é disponibilizado (via portal acadêmico e Teams) uma
 sequência de amostras da resposta em malha aberta de uma planta de nível para
 uma entrada do tipo degrau de amplitude 50.
 
-##Instalações necessárias
-###Python
+## Instalações necessárias
+
+### Python
+
 `$ python -m pip install numpy`
 
 Numpy, Scipy, Matplotlib e Control:
+
 ` $ sudo apt-get install python-numpy python-scipy python-matplotlib python-control`
 
-###Matlab
+### Matlab
+
 Instalar o pacote Control
 `>> pkg install -forge control`
 
 Carregar o pacote Control
 `>> pkg load control`
 
-##Controle Digital
-###Modelagem  do Sistema Dinâmico
+## Controle Digital
+
+### Modelagem  do Sistema Dinâmico
+
  **Estimador de Mínimos Quadrados**
+ 
  Utiliza uma sequência de amostras da entrada e da saída do sistema, para criar uma relação entre elas. Essa relação pode ser escrita em forma de uma equação, denominada Equação a Diferenças.
  
  𝒚[𝒎] = 𝒂𝟏. 𝒚[𝒎 − 𝟏] + 𝒃𝟏.𝒖[𝒎 − 𝟏]
  
  Essa equação relaciona a saída em determinada amostra m com a saída e a entrada na amostra m-1.
 
- ###Sistema Dinâmico
+ ### Sistema Dinâmico
  Em um sistema dinâmico, há duas possibilidades de operação:
 - Operação em malha aberta;
 - Operação em malha fechada.
