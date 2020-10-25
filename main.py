@@ -2,15 +2,15 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import numpy.matlib as M
-from scipy import io
+from scipy import io, signal
 from control import *
 
 # --------------------------------Amostras----------------------------------
 
 # Pegando as amostras de um  arquivo txt
-#degrau0_2 = open('degrau0_2.txt', 'r')
-#resp0_2 = open('resp0_2.txt', 'rb')
-#tempo0_2 = open('tempo0_2.txt', 'r')
+# degrau0_2 = open('degrau0_2.txt', 'r')
+# resp0_2 = open('resp0_2.txt', 'rb')
+# tempo0_2 = open('tempo0_2.txt', 'r')
 
 # Pegando a amostra direto em formato Matlab
 # Tenho o vetor degrau0_2,  resp0_2 e tempo0_2 dentro da amostra
@@ -29,6 +29,51 @@ def grafico(tempo, y):
     plt.ylabel("y")
     plt.show()
 
+# ----------------------------------Malha Aberta-------------------------------------
+
+
+def malha_aberta(tempo, a1, b1, PV, SP):
+    resposta = []
+    for i in np.arange(0, 350, 0.2):
+        PV = a1*PV + b1*SP
+        resposta.append(PV)
+    grafico(tempo, resposta)
+
+# ----------------------------------Malha Fechada com Controlador PID-------------------------------------
+
+
+def malha_fechada_sem_ganho(tempo, a1, b1, PV, SP):
+    resposta = []
+    for i in np.arange(0, 350, 0.2):
+        erro = SP - PV
+        PV = a1*PV + b1*SP
+        resposta.append(PV)
+    grafico(tempo, resposta)
+
+# ----------------------------------Malha Fechada com Controlador PID-------------------------------------
+
+
+def malha_fechada_controlador_PID(tempo, a1, b1, PV, SP, kp, ki, kd, Ts):
+    resposta = []
+    acao_integral = 0
+
+    erro_anterior = SP - PV
+    for i in np.arange(0, 350, 0.2):  # o i vai de 0.1 até 100 passo 0.1
+
+        erro = SP - PV
+
+        acao_proporcional = Kp*erro
+        acao_integral = acao_integral + Ki*Ts*erro
+        acao_derivativa = ((erro - erro_anterior)/Ts)*Kd
+
+        erro_anterior = erro
+
+        acao_controlador = acao_proporcional + acao_integral + acao_derivativa
+
+        PV = (a1*PV) + (b1*acao_controlador)
+        resposta.append(PV)
+
+    grafico(tempo, resposta)
 
 # --------------------------------Mínimos Quadrados ----------------------------------
 
@@ -45,13 +90,13 @@ J = J.T
 # print(J)
 
 tempo = np.array([tempo[0, 0:C-1], ])
-#tempo = tempo.T
+# tempo = tempo.T
 
 
 C = len(tempo[0])
 L = len(tempo)
-#print("coluna ", C)
-#print("linha ", L)
+# print("coluna ", C)
+# print("linha ", L)
 
 #
 Theta = np.linalg.inv(F.T @ F) @ F.T @ J
@@ -63,44 +108,23 @@ b1 = Theta[1]
 # print(a1)
 # print(b1
 
-
 # funcao de transferencia Z
-#sysZ = tf([int(b1)], [(1-int(a1)), 0.2])
-# print(sysZ)
+sysS = tf(b1, a1, 0.2)
+# sysZ = tf([b1], [1-a1], 0.2)
+# print(sysS)
 
-#t, y = step_response(sysS)
-# print(y)
+# ----------------------------------Sistema-------------------------------------
 
-# ----------------------------------PID-------------------------------------
+Kp = 13  # Ganho proporcional
+Ki = 0.5  # Ganho integral
+Kd = 1  # Ganho derivativo
 
-Kp = 3  # Ganho proporcional
-Ki = 8  # Ganho integral
-Kd = 10.25  # Ganho derivativo
-
-Ts = 0.1  # Tempo
-
-SP = 1  # Setpoint
+Ts = 0.2  # Tempo de amostragem
+SP = 50  # Setpoint
 PV = 0  # Precess Value
 
-resposta = []
-AcaoIntegral = 0
+tempo2 = np.arange(0, 350, 0.2)
 
-ErroAnterior = SP - PV
-tempo2 = np.arange(0, 30, 0.1)
-
-for i in np.arange(0, 30, 0.1):  # o i vai de 0.1 até 100 passo 0.1
-
-    Erro = SP - PV
-
-    AcaoProporcional = Kp*Erro
-    AcaoIntegral = AcaoIntegral + Ki*Ts*Erro
-    AcaoDerivativa = ((Erro - ErroAnterior)/Ts)*Kd
-
-    ErroAnterior = Erro
-
-    AcaoControlador = AcaoProporcional + AcaoIntegral + AcaoDerivativa
-
-    PV = (a1*PV) + (b1*AcaoControlador)
-    resposta.append(PV)
-
-grafico(tempo2, resposta)
+#malha_aberta(tempo2, a1, b1, PV, SP)
+#malha_fechada_sem_ganho(tempo2, a1, b1, PV, SP)
+malha_fechada_controlador_PID(tempo2, a1, b1, PV, SP, Kp, Ki, Kd, Ts)

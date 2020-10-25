@@ -56,3 +56,5 @@ end
 
 %plot(tempo,resp_PID)
 plot(tempo, resp_MA, tempo, resp_MF, tempo, resp_PID);
+xlabel("Tempo(s)");
+ylabel("Y");
