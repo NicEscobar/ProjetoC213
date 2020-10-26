@@ -1,5 +1,5 @@
 from tkinter import *
-import main as m
+import sistemas as m
 import numpy as np
 
 root = Tk()
