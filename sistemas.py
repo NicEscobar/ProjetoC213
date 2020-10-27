@@ -114,8 +114,8 @@ def minimos_quadrados():
     # print(Theta)
 
     # coeficientes
-    #a1 = Theta[0]
-    #b1 = Theta[1]
+    a1 = Theta[0]
+    b1 = Theta[1]
     # print(a1)
     # print(b1
 

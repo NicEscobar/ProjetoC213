@@ -12,8 +12,8 @@ end
 %Cálculo matricial
 Theta = inv(F'*F)*F'*J;
 %Obtendo os parametros a1 e b1
-a1 = Theta(1);
-b1 = Theta(2);
+a1 = Theta(1)
+b1 = Theta(2)
 
 %Limpando a workspace
 clear L

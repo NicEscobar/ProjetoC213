@@ -170,7 +170,7 @@ kpLabel["bg"] = '#F8F8FF'
 kpLabel["width"] = 10
 kpLabel["font"] = fontePadrao
 kpLabel.pack(side=LEFT)
-kpLabel.insert(0, 13)
+kpLabel.insert(0, 18)
 
 kiLabel = Label(Container4,
                 text=" ki (Ganho Integral) ", font=fontePadrao, bg='#F8F8FF')
@@ -181,7 +181,7 @@ kiLabel["bg"] = '#F8F8FF'
 kiLabel["width"] = 10
 kiLabel["font"] = fontePadrao
 kiLabel.pack(side=LEFT)
-kiLabel.insert(0, 0.5)
+kiLabel.insert(0, 7)
 
 kdLabel = Label(Container4,
                 text=" kd (Ganho Derivativo) ", font=fontePadrao, bg='#F8F8FF')
